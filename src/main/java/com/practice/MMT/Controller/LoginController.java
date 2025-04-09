@@ -4,10 +4,9 @@ import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Service.LoginService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/MMT/")
@@ -20,4 +19,19 @@ public class LoginController {
     public UserDto createuser(@RequestBody UserDto userDto){
         return loginService.registerUser(userDto);
     }
-}
+    @GetMapping("/login")
+    public ResponseEntity<UserDto> login(@RequestParam String email, @RequestParam String password){
+
+             return ResponseEntity.ok(loginService.verifyUser(email,password));
+//        }catch (NullPointerException e){
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }catch (RuntimeException e){
+//            System.out.println(e.getMessage());
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+
+    }
+
+    }
+
