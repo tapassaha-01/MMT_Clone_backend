@@ -2,7 +2,7 @@ spring:
   application:
       name: MMT
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/MMT_Clone
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -11,5 +11,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 server:
   port: 9090
+

@@ -2,12 +2,9 @@ package com.practice.MMT.Controller;
 
 import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Service.LoginService;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/MMT/")
@@ -15,9 +12,19 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-
-    @PostMapping("/create")
+    @PostMapping("register")
     public UserDto createuser(@RequestBody UserDto userDto){
         return loginService.registerUser(userDto);
     }
-}
+
+    @PostMapping("login")
+    public ResponseEntity<String> login(@RequestBody UserDto userDto){
+             return ResponseEntity.ok(loginService.verifyUser(userDto));
+    }
+//    @GetMapping("/logout")
+//    public boolean logout(){
+//        return loginService.logout();
+//    }
+
+    }
+

@@ -1,9 +1,6 @@
 package com.practice.MMT.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -14,8 +11,13 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String emailId;
+    private String userName;
+
+    @Column(unique = true,nullable = false)
+    private String email;
     private Long phoneNo;
-    private String pass;
+
+    @Column(unique = true,nullable = false)
+    private String password;
+    private boolean isAdmin;
 }
