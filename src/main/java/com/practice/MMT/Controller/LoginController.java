@@ -12,15 +12,19 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-    @PostMapping("/register")
+    @PostMapping("register")
     public UserDto createuser(@RequestBody UserDto userDto){
         return loginService.registerUser(userDto);
     }
-    @GetMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestParam String email, @RequestParam String password){
-             return ResponseEntity.ok(loginService.verifyUser(email,password));
 
+    @PostMapping("login")
+    public ResponseEntity<String> login(@RequestBody UserDto userDto){
+             return ResponseEntity.ok(loginService.verifyUser(userDto));
     }
+//    @GetMapping("/logout")
+//    public boolean logout(){
+//        return loginService.logout();
+//    }
 
     }
 

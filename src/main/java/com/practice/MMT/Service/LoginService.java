@@ -6,9 +6,11 @@ import com.practice.MMT.Exception.UserNotFoundException;
 import com.practice.MMT.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.Authentication;
 import java.util.Optional;
 
 @Service
@@ -17,13 +19,15 @@ public class LoginService {
 
 
     private UserRepository userRepository;
-//    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+    private AuthenticationManager authManager;
+    private JWTService jwtService;
 
     public UserDto registerUser(UserDto userDto) {
         ModelMapper modelMapper = new ModelMapper();
         try {
             UserEntity user = modelMapper.map(userDto, UserEntity.class);
-//            user.setPassword(passwordEncoder.encode((userDto.getPassword())));
+            user.setPassword(passwordEncoder.encode((userDto.getPassword())));
             user = userRepository.save(user);
             userDto.setId(user.getId());
         } catch (Exception e) {
@@ -34,15 +38,13 @@ public class LoginService {
         return userDto;
     }
 
-    public UserDto verifyUser(String email, String password) {
-        ModelMapper modelMapper = new ModelMapper();
-        Optional<UserEntity> user = Optional.ofNullable(userRepository.findByEmailAndPassword(email, password));
-        UserDto retUser = modelMapper.map(user, UserDto.class);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("user not present in the Database, Please Register yourself!!");
-        }
-        return retUser;
+    public String verifyUser(UserDto userDto) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUserName(),userDto.getPassword()));
+       return authentication.isAuthenticated()?jwtService.generateToken(userDto.getUserName()):"Fail";
     }
 
 
+    public boolean logout() {
+        return false;
+    }
 }
