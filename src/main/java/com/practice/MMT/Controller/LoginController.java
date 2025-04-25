@@ -4,10 +4,13 @@ import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Entity.MailOtp;
 import com.practice.MMT.Service.LoginService;
 import com.practice.MMT.Service.OtpService;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -26,7 +29,7 @@ public class LoginController {
     }
 
     @PostMapping("generateOtp")
-    public String verifyOtp(@RequestBody UserDto userDto){
+    public String generateOtp(@RequestBody UserDto userDto) throws MessagingException, IOException {
         return otpService.generateOtp(userDto);
     }
 

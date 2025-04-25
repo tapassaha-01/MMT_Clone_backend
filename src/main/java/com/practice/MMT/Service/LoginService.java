@@ -29,7 +29,7 @@ public class LoginService {
     private EmailService emailService;
     private MailOtpRepository mailOtpRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public UserDto registerUser(MailOtp mailOtp) {
 
         ModelMapper modelMapper = new ModelMapper();
