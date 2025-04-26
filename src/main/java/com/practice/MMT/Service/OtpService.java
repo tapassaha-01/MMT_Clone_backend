@@ -39,7 +39,7 @@ public class OtpService {
         String otp = String.valueOf(new Random().nextInt(999999));
         mailOtpRepository.save(MailOtp.builder()
                 .emailId(user.getEmail())
-                .Otp(otp)
+                .otp(otp)
                 .build());
         emailService.sendOtpEmail(userDto.getEmail(),otp);
         return otp;

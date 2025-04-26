@@ -35,21 +35,22 @@ public class LoginService {
         ModelMapper modelMapper = new ModelMapper();
         UserDto retUser = new UserDto();
         try {
-            if(mailOtpRepository.existsMailOtpByEmailId(mailOtp.getEmailId())){
+            if(mailOtpRepository.existsMailOtpByOtp(mailOtp.getOtp())){
                 UserEntity user = userRepository.findByEmail(mailOtp.getEmailId());
                 retUser = modelMapper.map(user,UserDto.class);
                 mailOtpRepository.deleteByEmailId(mailOtp.getEmailId());
                 log.info("User has been registered Successfully!!");
             }
             else{
-                userRepository.deleteById(retUser.getId());
-                mailOtpRepository.deleteById(mailOtp.getId());
+                userRepository.deleteByEmail(mailOtp.getEmailId());
+                mailOtpRepository.deleteByEmailId(mailOtp.getEmailId());
                 throw new RuntimeException("Otp verification failed hence not registered the user.");
             }
 
 
         } catch (Exception e) {
             log.debug("Some runtime error has been thrown : {}",e.getMessage());
+            return null;
         }
 
         return retUser;

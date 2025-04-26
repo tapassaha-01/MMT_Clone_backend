@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
     public UserEntity findByEmailAndPassword(String emailId, String pass);
     public UserEntity findByEmail(String email);
-
+    void deleteByEmail(String emailId);
 
 //    boolean existsByEmail(String email);
 
