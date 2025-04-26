@@ -30,14 +30,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-       return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth-> auth
-                        .requestMatchers("/MMT/**","/otp/**","/auth/**").permitAll()
-                        .anyRequest().authenticated())
-               .httpBasic(Customizer.withDefaults())
-               .sessionManagement(sessions->sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-               .build();
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/MMT/**",
+                                "/otp/**",
+                                "/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",  // also allow OpenAPI docs if using Swagger 3
+                                "/swagger-resources/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
 
