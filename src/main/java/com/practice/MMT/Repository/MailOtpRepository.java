@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MailOtpRepository extends JpaRepository<MailOtp,Long> {
-//    private boolean ex
-    public boolean existsMailOtpByOtp(String otp);
-    MailOtp deleteByEmailId(String email);
+    boolean existsMailOtpByOtp(String otp);
+    void deleteByEmailId(String email);
 }
