@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
+@CrossOrigin(value = "http://localhost:4200/")
 @RequestMapping("/MMT/")
 public class LoginController {
 
