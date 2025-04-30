@@ -39,7 +39,7 @@ public class OtpService {
             return "";
         }
         userRepository.save(user);
-        String otp = String.valueOf(new Random().nextInt(999999));
+        String otp = String.format("%06d", new Random().nextInt(999999));
         mailOtpRepository.save(MailOtp.builder()
                 .emailId(user.getEmail())
                 .otp(otp)

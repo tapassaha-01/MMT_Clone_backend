@@ -37,6 +37,7 @@ public class LoginController {
 
     @PostMapping("login")
     public ResponseEntity<Map<String,String>> login(@RequestParam String userName, @RequestParam String password){
+
              return ResponseEntity.ok(loginService.verifyUser(userName,password));
     }
 
