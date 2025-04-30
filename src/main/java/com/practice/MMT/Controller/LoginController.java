@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -35,8 +36,8 @@ public class LoginController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody UserDto userDto){
-             return ResponseEntity.ok(loginService.verifyUser(userDto));
+    public ResponseEntity<Map<String,String>> login(@RequestParam String userName, @RequestParam String password){
+             return ResponseEntity.ok(loginService.verifyUser(userName,password));
     }
 
     @GetMapping("test")

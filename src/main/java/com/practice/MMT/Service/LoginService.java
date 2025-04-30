@@ -1,5 +1,8 @@
 package com.practice.MMT.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Entity.MailOtp;
 import com.practice.MMT.Entity.UserEntity;
@@ -15,6 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -57,9 +64,25 @@ public class LoginService {
     }
 
 
-    public String verifyUser(UserDto userDto) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUserName(),userDto.getPassword()));
-       return authentication.isAuthenticated()?jwtService.generateToken(userDto.getUserName()):"Fail";
+    public Map<String,String> verifyUser(String userName, String password) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(userName,password));
+        Map<String,String> retData = new HashMap<>();
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new Jdk8Module());
+            if(authentication.isAuthenticated()){
+                retData.put("jwtToken",jwtService.generateToken(userName));
+                userRepository.findByUserName(userName);
+                retData.put("user",mapper.writeValueAsString(Optional.ofNullable(userRepository.findByUserName(userName)).get()));
+            }
+            else{
+                throw new RuntimeException("Authentication failer");
+            }
+        } catch (JsonProcessingException | NullPointerException e) {
+            log.error("Having some error while parsing User data to String :{}",e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return retData;
     }
 
 

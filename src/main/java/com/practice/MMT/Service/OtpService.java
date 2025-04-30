@@ -35,6 +35,9 @@ public class OtpService {
         ModelMapper modelMapper = new ModelMapper();
         UserEntity user = modelMapper.map(userDto, UserEntity.class);
         user.setPassword(passwordEncoder.encode((userDto.getPassword())));
+        if(userRepository.existsUserEntityByEmail(user.getEmail())){
+            return "";
+        }
         userRepository.save(user);
         String otp = String.valueOf(new Random().nextInt(999999));
         mailOtpRepository.save(MailOtp.builder()
