@@ -21,6 +21,7 @@ public class BookingDto {
     private String endTo;
     private String bookingClass;
     private Long passengerNo;
+    private String emailId;
     private Set<PassengerDto> passengers=new HashSet<>() ;
 
 }

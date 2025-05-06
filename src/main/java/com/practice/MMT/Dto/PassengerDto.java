@@ -2,9 +2,6 @@ package com.practice.MMT.Dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.practice.MMT.Entity.BookingEntity;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 

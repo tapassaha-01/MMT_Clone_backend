@@ -22,8 +22,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private OtpService otpService;
+
 
     @PostMapping("register")
     public UserDto createUser(@RequestBody MailOtp mailOtp){
@@ -32,7 +31,7 @@ public class LoginController {
 
     @PostMapping("generateOtp")
     public String generateOtp(@RequestBody UserDto userDto) throws MessagingException, IOException {
-        return otpService.generateOtp(userDto);
+        return loginService.generateOtp(userDto);
     }
 
     @PostMapping("login")

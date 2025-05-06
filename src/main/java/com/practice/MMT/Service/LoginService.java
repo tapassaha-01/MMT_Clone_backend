@@ -8,6 +8,7 @@ import com.practice.MMT.Entity.MailOtp;
 import com.practice.MMT.Entity.UserEntity;
 import com.practice.MMT.Repository.MailOtpRepository;
 import com.practice.MMT.Repository.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -35,6 +37,7 @@ public class LoginService {
     private JWTService jwtService;
     private EmailService emailService;
     private MailOtpRepository mailOtpRepository;
+    private OtpService otpService;
 
     @Transactional
     public UserDto registerUser(MailOtp mailOtp) {
@@ -85,6 +88,17 @@ public class LoginService {
         return retData;
     }
 
+    @Transactional
+    public String generateOtp(UserDto userDto) throws MessagingException, IOException {
+        ModelMapper modelMapper = new ModelMapper();
+        UserEntity user = modelMapper.map(userDto, UserEntity.class);
+        user.setPassword(passwordEncoder.encode((userDto.getPassword())));
+        if(userRepository.existsUserEntityByEmail(user.getEmail())){
+            return "";
+        }
+        userRepository.save(user);
+        return otpService.generateOtp(userDto.getEmail());
+    }
 
     public boolean logout() {
         return false;

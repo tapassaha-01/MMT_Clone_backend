@@ -1,7 +1,10 @@
 package com.practice.MMT.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.practice.MMT.Dto.BookingDto;
+import com.practice.MMT.Dto.PassengerDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -10,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookingEntity {
 
     @Id
@@ -23,10 +27,20 @@ public class BookingEntity {
     private String endTo;
     private String bookingClass;
     private Long passengerNo;
-
+    private String emailId;
 
     @ManyToMany(mappedBy = "bookings")
     private Set<PassengerEntity> passengers=new HashSet<>() ;
+
+
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
 
     public Set<PassengerEntity> getPassengers() {
         return passengers;
