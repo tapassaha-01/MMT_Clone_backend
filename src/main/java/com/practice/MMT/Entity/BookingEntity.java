@@ -6,6 +6,7 @@ import com.practice.MMT.Dto.PassengerDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -28,6 +29,24 @@ public class BookingEntity {
     private String bookingClass;
     private Long passengerNo;
     private String emailId;
+    private double cost;
+    private LocalDate bookingTime;
+
+    public LocalDate getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setBookingTime(LocalDate bookingTime) {
+        this.bookingTime = bookingTime;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
 
     @ManyToMany(mappedBy = "bookings")
     private Set<PassengerEntity> passengers=new HashSet<>() ;

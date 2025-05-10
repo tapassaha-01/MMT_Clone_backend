@@ -58,7 +58,9 @@ public class BookingService {
                     .bookingClass(booking.getBookingClass())
                     .passengerNo(booking.getPassengerNo())
                             .emailId(booking.getEmailId())
-                    .passengers(booking.getPassengers()).build()));
+                    .passengers(booking.getPassengers())
+                    .cost(booking.getCost())
+                    .bookingTime(booking.getBookingTime()).build()));
             retBooking.put("otp",otpService.generateOtp(booking.getEmailId()));
             return retBooking;
         } catch (Exception e) {

@@ -23,5 +23,8 @@ public class BookingDto {
     private Long passengerNo;
     private String emailId;
     private Set<PassengerDto> passengers=new HashSet<>() ;
+    private double cost;
+    private LocalDate bookingTime;
+
 
 }

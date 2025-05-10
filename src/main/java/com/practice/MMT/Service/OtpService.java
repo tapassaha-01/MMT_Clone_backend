@@ -21,15 +21,44 @@ public class OtpService {
     private EmailService emailService;
 
 
+
 @Transactional
 public String generateOtp(String email) throws MessagingException, IOException {
     String otp = String.format("%06d", new Random().nextInt(999999));
-    mailOtpRepository.save(MailOtp.builder()
-            .emailId(email)
-            .otp(otp)
-            .build());
-    emailService.sendOtpEmail(email,otp);
+    try {
+        if (!mailOtpRepository.existsMailOtpByEmailId(email)) {
+            log.info("generating otp......");
+            mailOtpRepository.save(MailOtp.builder()
+                    .emailId(email)
+                    .otp(otp)
+                    .build());
+            emailService.sendOtpEmail(email, otp);
+            log.info("opt has sent to the mail {}", email);
+        }
+        else {
+            throw new RuntimeException("Email is already exist in Db, please use different one ..");
+        }
+    } catch (Exception e) {
+        log.error(e.getMessage());
+        throw new RuntimeException(e.getMessage());
+    }
     return otp;
+}
+
+@Transactional
+    public boolean verifyOtp(MailOtp mailOtp){
+    boolean verify = false;
+    try{
+        if(mailOtpRepository.existsMailOtpByOtp(mailOtp.getOtp())){
+            mailOtpRepository.deleteByEmailId(mailOtp.getEmailId());
+            verify = true;
+
+        }}catch (Exception e){
+        mailOtpRepository.deleteByEmailId(mailOtp.getEmailId());
+        throw new RuntimeException("Entered Otp is not valid");
+
+    }
+    return verify;
 }
 
 

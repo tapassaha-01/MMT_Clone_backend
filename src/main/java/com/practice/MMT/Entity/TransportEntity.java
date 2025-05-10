@@ -15,7 +15,6 @@ public class TransportEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String transportName;
-    private String type;
-    private String cost;
+    private String price;
 
 }
