@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(value = "http://localhost:4200/")
+//@CrossOrigin(value = "http://localhost:4200/")
 @RequestMapping("/MMT/Booking/")
 public class BookingController {
 

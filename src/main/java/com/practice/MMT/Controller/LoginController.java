@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@CrossOrigin(value = "http://localhost:4200/")
+//@CrossOrigin(value = "http://localhost:4200/")
 @RequestMapping("/MMT/")
 public class LoginController {
 
@@ -40,10 +40,10 @@ public class LoginController {
              return ResponseEntity.ok(loginService.verifyUser(userName,password));
     }
 
-    @GetMapping("test")
-    public String test(@RequestParam String name){
-        return name;
-    }
+//    @GetMapping("test")
+//    public String test(){
+//        return "Test";
+//    }
 
 //    @GetMapping("/logout")
 //    public boolean logout(){
