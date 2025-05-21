@@ -83,9 +83,7 @@ public class AdminService {
 
     public List<FlightDetails> getFlightDetails(FlightDetailsDto flightDetailsDto) {
         return flightDetailsRepo.findByStartFromAndDestinationAndFlightClassAndFairType(
-                flightDetailsDto.getStartFrom(),flightDetailsDto.getFlightClass()
+                flightDetailsDto.getStartFrom(),flightDetailsDto.getDestination()
                         ,flightDetailsDto.getFlightClass(),flightDetailsDto.getFairType());
     }
-//        return null;
-//    }
 }
