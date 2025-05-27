@@ -9,6 +9,9 @@ import java.time.LocalDate;
 @Builder
 public class FlightDetailsDto {
 
+    private String planeCompanyName;
+    private LocalDate travelTime;
+    private double price;
     private String startFrom;
     private String destination;
     private LocalDate departureDate;

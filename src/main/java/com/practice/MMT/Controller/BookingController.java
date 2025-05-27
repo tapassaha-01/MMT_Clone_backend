@@ -25,7 +25,6 @@ public class BookingController {
 
     @PostMapping("verifyTicketOtp")
     public boolean verifyBookingOtp(@RequestBody MailOtp mailOtp){
-
         return bookingService.verifyMailId(mailOtp);
     }
 

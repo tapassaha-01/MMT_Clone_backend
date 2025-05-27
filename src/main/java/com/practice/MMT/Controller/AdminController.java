@@ -17,7 +17,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("getDetails")
+    @PostMapping("getFlightDetails")
     private ResponseEntity<List<FlightDetails>> getFlightDetsails(@RequestBody FlightDetailsDto flightDetailsDto) {
 
         return ResponseEntity.ok(adminService.getFlightDetails(flightDetailsDto));
