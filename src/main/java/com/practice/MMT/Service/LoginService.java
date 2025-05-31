@@ -60,6 +60,7 @@ public class LoginService {
 
         } catch (Exception e) {
             log.debug("Some runtime error has been thrown : {}",e.getMessage());
+            userRepository.deleteByEmail(mailOtp.getEmailId());
             return null;
         }
 

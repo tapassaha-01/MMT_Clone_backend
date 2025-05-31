@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -74,11 +75,11 @@ public class AdminService {
         }
     }
     private LocalDate getDateValue(Cell cell){
-        if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
-            Date date = cell.getDateCellValue();
-            return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
-        return LocalDate.now();
+//        if (cell.getCellType() == CellType.NUMERIC || DateUtil.isCellDateFormatted(cell)) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDate.parse(cell.getStringCellValue(), formatter);
+
+//        return LocalDate.now();
     }
 
     public List<FlightDetails> getFlightDetails(FlightDetailsDto flightDetailsDto) {
