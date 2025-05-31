@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS "public"."user_entity"
+ADD COLUMN IF NOT EXISTS email_id VARCHAR(255);

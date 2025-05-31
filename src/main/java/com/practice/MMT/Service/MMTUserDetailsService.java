@@ -18,7 +18,7 @@ public class MMTUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity user = userRepository.findByUserName(username).orElseThrow(()->new UsernameNotFoundException("Email id is not present in the DB") );
+        UserEntity user = userRepository.findByUserName(username).orElseThrow(()->new UsernameNotFoundException("Username is not present in the DB") );
 
         return new UserPrinciple(user);
     }
