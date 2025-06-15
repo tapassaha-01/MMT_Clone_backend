@@ -41,6 +41,9 @@ public class AdminService {
                 Row row = rows.next();
                 FlightDetails flightDetails = new FlightDetails();
                 flightDetails.setPlaneCompanyName(getStringValue(row.getCell(0)));
+                if(row.getCell(1)==null|| row.getCell(2)==null) {
+                	continue;
+                }
                 flightDetails.setDepartureDate(getDateValue(row.getCell(1)));
                 flightDetails.setArrivalDate(getDateValue(row.getCell(2)));
                 flightDetails.setStartFrom(getStringValue(row.getCell(3)));
@@ -75,8 +78,13 @@ public class AdminService {
         }
     }
     private LocalDate getDateValue(Cell cell){
+//    	String blank_value = "0000-00-00 00:00";
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//    	if(cell==null) {
+//    		return LocalDate.parse(LocalDate.now().toString(),formatter);
+//    	}
 //        if (cell.getCellType() == CellType.NUMERIC || DateUtil.isCellDateFormatted(cell)) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        
         return LocalDate.parse(cell.getStringCellValue(), formatter);
 
 //        return LocalDate.now();
