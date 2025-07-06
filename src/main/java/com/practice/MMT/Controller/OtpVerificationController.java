@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -38,11 +39,11 @@ public class OtpVerificationController {
 
     // Endpoint to verify OTP
     @PostMapping("otpVerify")
-    public ResponseEntity<String> verifyOtp(@RequestBody MailOtp mailOtp) {
+    public ResponseEntity<Map<String, String>> verifyOtp(@RequestBody MailOtp mailOtp) {
         if (otpService.verifyOtp(mailOtp)) {
-            return ResponseEntity.ok("OTP verified successfully.");
+            return ResponseEntity.ok(Collections.singletonMap("msg", "OTP verified successfully."));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("msg", "Invalid OTP."));
         }
     }
 

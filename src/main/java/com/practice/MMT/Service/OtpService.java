@@ -47,18 +47,18 @@ public String generateOtp(String email) throws MessagingException, IOException {
 
 @Transactional
     public boolean verifyOtp(MailOtp mailOtp){
-    boolean verify = false;
+    //boolean verify = false;
     try{
         if(mailOtpRepository.existsMailOtpByOtp(mailOtp.getOtp())){
             mailOtpRepository.deleteByEmailId(mailOtp.getEmailId());
-            verify = true;
+            return true;
 
         }}catch (Exception e){
         mailOtpRepository.deleteByEmailId(mailOtp.getEmailId());
         throw new RuntimeException("Entered Otp is not valid");
 
     }
-    return verify;
+    return false;
 }
 
 

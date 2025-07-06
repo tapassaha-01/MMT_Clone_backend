@@ -40,15 +40,6 @@ public class LoginController {
              return ResponseEntity.ok(loginService.verifyUser(userName,password));
     }
 
-//    @GetMapping("test")
-//    public String test(){
-//        return "Test";
-//    }
-
-//    @GetMapping("/logout")
-//    public boolean logout(){
-//        return loginService.logout();
-//    }
 
     }
 

@@ -1,5 +1,6 @@
 package com.practice.MMT.Service;
 
+import com.practice.MMT.Dto.CitiesList;
 import com.practice.MMT.Dto.FlightDetailsDto;
 import com.practice.MMT.Entity.FlightDetails;
 import com.practice.MMT.Repository.FlightDetailsRepository;
@@ -14,10 +15,9 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -96,4 +96,18 @@ public class AdminService {
                 flightDetailsDto.getStartFrom(),flightDetailsDto.getDestination()
                         ,flightDetailsDto.getFlightClass(),flightDetailsDto.getFairType());
     }
+
+    public Map<String,List<String>> getCities() {
+        Map<String,List<String>> reList = new HashMap<String,List<String>>();
+        reList.put("destination",new ArrayList<>());
+        reList.put("startFrom",new ArrayList<>());
+        flightDetailsRepo.findAll().forEach(e -> {
+            reList.get("destination").add(e.getDestination());
+            reList.get("startFrom").add(e.getStartFrom());
+        });
+        return reList;
+
+
+    }
+
 }
