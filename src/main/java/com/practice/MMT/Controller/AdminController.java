@@ -1,6 +1,7 @@
 package com.practice.MMT.Controller;
 
 import com.practice.MMT.Dto.CitiesList;
+import com.practice.MMT.Dto.DashBoardDto;
 import com.practice.MMT.Dto.FlightDetailsDto;
 import com.practice.MMT.Entity.FlightDetails;
 import com.practice.MMT.Service.AdminService;
@@ -33,5 +34,11 @@ public class AdminController {
     @GetMapping("/getCitiesDetails")
     public Map<String,List<String>> getCities(){
         return adminService.getCities();
+    }
+
+    @GetMapping("/getDashboardDetails/{userMail}")
+    public DashBoardDto getDashBoardDetails(@PathVariable("userMail") String userMail){
+        return adminService.getDashBoardDetails(userMail);
+
     }
 }

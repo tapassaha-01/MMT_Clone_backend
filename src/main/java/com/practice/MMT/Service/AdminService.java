@@ -1,9 +1,11 @@
 package com.practice.MMT.Service;
 
-import com.practice.MMT.Dto.CitiesList;
+import com.practice.MMT.Dto.DashBoardDto;
 import com.practice.MMT.Dto.FlightDetailsDto;
 import com.practice.MMT.Entity.FlightDetails;
+import com.practice.MMT.Repository.BookingRepository;
 import com.practice.MMT.Repository.FlightDetailsRepository;
+import com.practice.MMT.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -13,11 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,6 +24,8 @@ import java.util.stream.Collectors;
 public class AdminService {
 
     private FlightDetailsRepository flightDetailsRepo;
+    private UserRepository userRepository;
+    private BookingRepository bookingRepository;
 
     public FlightDetails setFlightDetails(MultipartFile file) {
         List<FlightDetails> flightDetailsDtoList = new ArrayList<>();
@@ -110,4 +111,19 @@ public class AdminService {
 
     }
 
+    public DashBoardDto getDashBoardDetails(String userMail) {
+        var userCount = userRepository.count();
+        var totalBooking = bookingRepository.count();
+        if(totalBooking==0){
+            return null;
+        }
+        Map<String,String> revenue = new HashMap<>();
+        var bookingEntityList = bookingRepository.getMonthlyRevenue();
+        bookingEntityList.stream().map(row -> revenue.put(row[0].toString(),row[1].toString()));
+        return DashBoardDto.builder()
+                .revenue(revenue)
+                .totalBooking(totalBooking)
+                .totalUser(userCount)
+                .build();
+    }
 }

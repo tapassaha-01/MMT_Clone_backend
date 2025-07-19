@@ -5,19 +5,24 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.practice.MMT.Dto.BookingDto;
+import com.practice.MMT.Dto.UpdateProfileDto;
 import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Entity.BookingEntity;
 import com.practice.MMT.Entity.MailOtp;
 import com.practice.MMT.Entity.PassengerEntity;
+import com.practice.MMT.Entity.UserEntity;
 import com.practice.MMT.Repository.BookingRepository;
 import com.practice.MMT.Repository.MailOtpRepository;
 import com.practice.MMT.Repository.PassengerRepository;
+import com.practice.MMT.Repository.UserRepository;
 import io.swagger.v3.core.util.Json;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
+import java.io.DataInput;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,7 +35,7 @@ public class BookingService {
 
     private BookingRepository bookingRepository;
     private PassengerRepository passengerRepository;
-    private OtpService otpService;
+    private UserRepository userRepository;
     private MailOtpRepository mailOtpRepository;
 
     @Transactional
@@ -81,5 +86,18 @@ public class BookingService {
 
         }
         return verify;
+    }
+
+    @Transactional
+    public UserDto updateProfile(UpdateProfileDto user) {
+        UserEntity updateUser = userRepository.findByEmail(user.getOldEmail());
+        updateUser.setUserName(user.getUserName());
+        updateUser.setPhoneNo(user.getPhoneNo());
+        updateUser.setEmail(user.getEmail());
+        userRepository.save(updateUser);
+        return UserDto.builder().email(user.getEmail())
+                .phoneNo(user.getPhoneNo())
+                .userName(user.getUserName())
+                .build();
     }
 }

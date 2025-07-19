@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-
-    private Long id=null;
+public class UpdateProfileDto {
     private String userName;
     private String email;
+    private String oldEmail;
     private Long phoneNo;
-    private String password;
-    private boolean isAdmin;
 }

@@ -1,6 +1,8 @@
 package com.practice.MMT.Controller;
 
 import com.practice.MMT.Dto.BookingDto;
+import com.practice.MMT.Dto.UpdateProfileDto;
+import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Entity.BookingEntity;
 import com.practice.MMT.Entity.MailOtp;
 import com.practice.MMT.Service.BookingService;
@@ -29,6 +31,11 @@ public class BookingController {
         return bookingService.verifyMailId(mailOtp);
     }
 
+    @PutMapping("userDetailsUpdate")
+    public UserDto updateUserProfile(@RequestBody UpdateProfileDto user)
+    {
+        return bookingService.updateProfile(user);
+    }
 
 
 }
