@@ -2,9 +2,12 @@ package com.practice.MMT.Controller;
 
 import com.practice.MMT.Dto.UserDto;
 import com.practice.MMT.Entity.MailOtp;
+import com.practice.MMT.Service.JWTService;
 import com.practice.MMT.Service.LoginService;
 import com.practice.MMT.Service.OtpService;
 import jakarta.mail.MessagingException;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +18,12 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-//@CrossOrigin(value = "http://localhost:4200/")
-@RequestMapping("/MMT/")
+@RequestMapping("/MMT/login")
+@AllArgsConstructor
 public class LoginController {
 
-    @Autowired
     private LoginService loginService;
-
-
+    private JWTService jwtService;
 
     @PostMapping("register")
     public UserDto createUser(@RequestBody MailOtp mailOtp){
@@ -37,9 +38,8 @@ public class LoginController {
     @PostMapping("login")
     public ResponseEntity<Map<String,String>> login(@RequestParam String userName, @RequestParam String password){
 
-             return ResponseEntity.ok(loginService.verifyUser(userName,password));
+        return ResponseEntity.ok(loginService.verifyUser(userName,password));
     }
 
-
-    }
+}
 

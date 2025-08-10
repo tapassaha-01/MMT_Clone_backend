@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Objects.isNull;
+
 @RestController
 @RequestMapping("/MMT/Admin/")
 public class AdminController {
@@ -39,6 +41,5 @@ public class AdminController {
     @GetMapping("/getDashboardDetails/{userMail}")
     public DashBoardDto getDashBoardDetails(@PathVariable("userMail") String userMail){
         return adminService.getDashBoardDetails(userMail);
-
     }
 }

@@ -114,12 +114,10 @@ public class AdminService {
     public DashBoardDto getDashBoardDetails(String userMail) {
         var userCount = userRepository.count();
         var totalBooking = bookingRepository.count();
-        if(totalBooking==0){
-            return null;
-        }
         Map<String,String> revenue = new HashMap<>();
+        if(totalBooking>0){
         var bookingEntityList = bookingRepository.getMonthlyRevenue();
-        bookingEntityList.stream().map(row -> revenue.put(row[0].toString(),row[1].toString()));
+        bookingEntityList.stream().map(row -> revenue.put(row[0].toString(),row[1].toString()));}
         return DashBoardDto.builder()
                 .revenue(revenue)
                 .totalBooking(totalBooking)

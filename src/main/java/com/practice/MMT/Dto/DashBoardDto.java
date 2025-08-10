@@ -14,5 +14,5 @@ import java.util.Map;
 public class DashBoardDto {
     private Long totalBooking;
     private Long totalUser;
-    Map<String,String> revenue;
+    private Map<String,String> revenue;
 }
