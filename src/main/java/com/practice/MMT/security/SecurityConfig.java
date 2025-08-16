@@ -39,6 +39,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/MMT/login/**",
+                                "/MMT/**",
+                                "/otp/**",
+                                "/auth/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",  // also allow OpenAPI docs if using Swagger 3
                                 "/swagger-resources/**"

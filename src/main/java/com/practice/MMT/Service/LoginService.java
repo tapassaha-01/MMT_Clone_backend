@@ -17,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
@@ -101,7 +100,14 @@ public class LoginService {
         return otpService.generateOtp(userDto.getEmail());
     }
 
-    public boolean logout() {
-        return false;
+
+    public boolean resetPass(String newPass, String emailId) {
+        if(!userRepository.existsUserEntityByEmail(emailId)){
+            return false;
+        }
+        UserEntity user = userRepository.findByEmail(emailId);
+        user.setPassword(passwordEncoder.encode(newPass));
+        userRepository.save(user);
+        return true;
     }
 }

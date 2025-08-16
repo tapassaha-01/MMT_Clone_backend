@@ -41,5 +41,10 @@ public class LoginController {
         return ResponseEntity.ok(loginService.verifyUser(userName,password));
     }
 
+    @PostMapping("forgetPass")
+    public boolean resetPass(String newPass,String emailId){
+        return loginService.resetPass(newPass,emailId);
+    }
+
 }
 
